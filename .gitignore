@@ -1,0 +1,16 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.dca
+*.extracted
+*.restored
+
+# Test binary
+*.test
+
+# IDE
+.idea/
+.vscode/
