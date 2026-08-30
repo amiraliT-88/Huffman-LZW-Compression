@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>📦 Huffman & LZW Data Compression</h1>
+  <h1>Huffman & LZW Data Compression</h1>
   
   <p><b>A high-performance, zero-dependency Computer Science suite implementing Huffman Coding, LZW (Lempel-Ziv-Welch), Run-Length Encoding (RLE), and Shannon Information Entropy Analysis in pure Go.</b></p>
 
@@ -13,7 +13,7 @@
 
 ---
 
-## 🔬 Overview & Scientific Background
+## Overview & Scientific Background
 
 Data compression is the science of encoding information using fewer bits than the original representation. This repository provides modular, from-scratch implementations of fundamental loss-less compression algorithms and information-theoretic analyzers with **zero third-party dependencies**.
 
@@ -38,7 +38,7 @@ Data compression is the science of encoding information using fewer bits than th
 
 ---
 
-## ⚡ Implemented Algorithms
+## Implemented Algorithms
 
 ### 1. Huffman Coding (`pkg/huffman`)
 - **Min-Heap Construction:** Uses a binary priority queue to merge the lowest-frequency character nodes in $O(N \log K)$ time.
@@ -59,7 +59,7 @@ Data compression is the science of encoding information using fewer bits than th
 
 ---
 
-## 🛠️ Installation & Building
+## Installation & Building
 
 No external tools or packages are needed. Built entirely with the standard Go toolchain:
 
@@ -74,7 +74,7 @@ go build -o datacompression.exe .
 
 ---
 
-## 💻 CLI Usage Guide
+## CLI Usage Guide
 
 ### 1. Analyze Shannon Information Entropy
 Calculates the theoretical compression ceiling and symbol frequency distribution:
@@ -106,7 +106,7 @@ The engine automatically detects the compression algorithm from the binary conta
 
 ---
 
-## 🧪 Unit Testing & Verification
+## Unit Testing & Verification
 
 Run the comprehensive unit test suite to verify lossless round-trip compression across plain text, repetitive streams, all 256-symbol alphabets, and random binary blocks:
 
@@ -116,5 +116,5 @@ go test -v ./...
 
 ---
 
-## 📄 License
+## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
