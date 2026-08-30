@@ -1,5 +1,5 @@
 <div align="center">
-  <h1>📦 Data Compression Algorithms</h1>
+  <h1>📦 Huffman & LZW Data Compression</h1>
   
   <p><b>A high-performance, zero-dependency Computer Science suite implementing Huffman Coding, LZW (Lempel-Ziv-Welch), Run-Length Encoding (RLE), and Shannon Information Entropy Analysis in pure Go.</b></p>
 
@@ -65,8 +65,8 @@ No external tools or packages are needed. Built entirely with the standard Go to
 
 ```bash
 # Clone the repository
-git clone https://github.com/amiraliT-88/Data-Compression-Algorithms.git
-cd Data-Compression-Algorithms
+git clone https://github.com/amiraliT-88/Huffman-LZW-Compression.git
+cd Huffman-LZW-Compression
 
 # Build standalone executable
 go build -o datacompression.exe .
