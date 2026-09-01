@@ -1,6 +1,5 @@
 package huffman
 
-// PriorityQueue implements a Min-Heap for Huffman nodes.
 type PriorityQueue []*Node
 
 func (pq PriorityQueue) Len() int           { return len(pq) }

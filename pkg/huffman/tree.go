@@ -5,7 +5,6 @@ import (
 	"datacompression/pkg/bitstream"
 )
 
-// BuildTree constructs a canonical Huffman tree from a frequency table.
 func BuildTree(freqs map[byte]int) *Node {
 	if len(freqs) == 0 {
 		return nil
@@ -22,7 +21,6 @@ func BuildTree(freqs map[byte]int) *Node {
 		return nil
 	}
 
-	// Single unique character edge-case: wrap in symmetric binary structure
 	if len(pq) == 1 {
 		leaf := pq[0]
 		return &Node{
@@ -49,7 +47,6 @@ func BuildTree(freqs map[byte]int) *Node {
 	return heap.Pop(&pq).(*Node)
 }
 
-// BuildCodeTable generates prefix binary codes for all leaf symbols in the tree.
 func BuildCodeTable(root *Node) map[byte]string {
 	table := make(map[byte]string)
 	var traverse func(node *Node, path string)
@@ -71,8 +68,6 @@ func BuildCodeTable(root *Node) map[byte]string {
 	return table
 }
 
-// SerializeTree serializes the tree topology using pre-order traversal:
-// 0 for internal node, 1 followed by 8-bit byte for leaf node.
 func SerializeTree(node *Node, bw *bitstream.BitWriter) error {
 	if node == nil {
 		return nil
@@ -92,7 +87,6 @@ func SerializeTree(node *Node, bw *bitstream.BitWriter) error {
 	return SerializeTree(node.Right, bw)
 }
 
-// DeserializeTree reconstructs the tree topology from the bitstream.
 func DeserializeTree(br *bitstream.BitReader) (*Node, error) {
 	bit, err := br.ReadBit()
 	if err != nil {

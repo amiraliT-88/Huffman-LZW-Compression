@@ -1,7 +1,7 @@
 <div align="center">
   <h1>Huffman & LZW Data Compression</h1>
   
-  <p><b>A high-performance, zero-dependency Computer Science suite implementing Huffman Coding, LZW (Lempel-Ziv-Welch), Run-Length Encoding (RLE), and Shannon Information Entropy Analysis in pure Go.</b></p>
+  <p><b>Huffman Coding, LZW (Lempel-Ziv-Welch), Run-Length Encoding (RLE), and Shannon Entropy Analysis in pure Go with zero dependencies.</b></p>
 
   <p>
     <img src="https://img.shields.io/badge/Language-Go-00ADD8?style=for-the-badge&logo=go&logoColor=white" />
@@ -13,9 +13,9 @@
 
 ---
 
-## Overview & Scientific Background
+## Overview
 
-Data compression is the science of encoding information using fewer bits than the original representation. This repository provides modular, from-scratch implementations of fundamental loss-less compression algorithms and information-theoretic analyzers with **zero third-party dependencies**.
+Modular, from-scratch implementations of fundamental lossless data compression algorithms and Shannon information entropy calculations in Go. Zero external dependencies.
 
 ```text
                +-----------------------------+
@@ -106,9 +106,9 @@ The engine automatically detects the compression algorithm from the binary conta
 
 ---
 
-## Unit Testing & Verification
+## Testing
 
-Run the comprehensive unit test suite to verify lossless round-trip compression across plain text, repetitive streams, all 256-symbol alphabets, and random binary blocks:
+Run unit tests across all packages:
 
 ```bash
 go test -v ./...

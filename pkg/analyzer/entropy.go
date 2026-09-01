@@ -14,7 +14,6 @@ type AnalysisResult struct {
 	FrequencyTable        map[byte]int
 }
 
-// AnalyzeData calculates Shannon Entropy: H(X) = -sum(P(x) * log2(P(x)))
 func AnalyzeData(data []byte) AnalysisResult {
 	n := len(data)
 	if n == 0 {
