@@ -6,14 +6,11 @@ import (
 	"errors"
 )
 
-var (
-	MagicHeader = []byte{'D', 'C', 0x03} // Data-Compression RLE format
-)
+var MagicHeader = []byte{'D', 'C', 0x03}
 
-// Compress encodes byte sequences using Run-Length Encoding.
 func Compress(input []byte) ([]byte, error) {
 	if len(input) == 0 {
-		return nil, errors.New("cannot compress empty input")
+		return nil, errors.New("empty input")
 	}
 
 	var buf bytes.Buffer
@@ -37,14 +34,13 @@ func Compress(input []byte) ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// Decompress decodes an RLE encoded stream back to original bytes.
 func Decompress(compressed []byte) ([]byte, error) {
 	if len(compressed) < len(MagicHeader)+8 {
-		return nil, errors.New("corrupted or truncated archive header")
+		return nil, errors.New("corrupted or truncated archive")
 	}
 
 	if !bytes.Equal(compressed[:len(MagicHeader)], MagicHeader) {
-		return nil, errors.New("invalid file signature: not a valid RLE archive")
+		return nil, errors.New("invalid rle signature")
 	}
 
 	offset := len(MagicHeader)

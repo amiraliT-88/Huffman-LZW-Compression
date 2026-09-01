@@ -4,17 +4,17 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
+
 	"datacompression/pkg/bitstream"
 )
 
-// Decompress decodes an LZW compressed stream back to original bytes.
 func Decompress(compressed []byte) ([]byte, error) {
 	if len(compressed) < len(MagicHeader)+8 {
-		return nil, errors.New("corrupted or truncated archive header")
+		return nil, errors.New("corrupted or truncated archive")
 	}
 
 	if !bytes.Equal(compressed[:len(MagicHeader)], MagicHeader) {
-		return nil, errors.New("invalid file signature: not a valid LZW archive")
+		return nil, errors.New("invalid lzw signature")
 	}
 
 	offset := len(MagicHeader)
@@ -27,7 +27,7 @@ func Decompress(compressed []byte) ([]byte, error) {
 
 	br := bitstream.NewBitReader(r)
 
-	dict := make(map[uint16]string)
+	dict := make(map[uint16]string, MaxDictSize)
 	for i := 0; i < 256; i++ {
 		dict[uint16(i)] = string([]byte{byte(i)})
 	}
@@ -40,7 +40,7 @@ func Decompress(compressed []byte) ([]byte, error) {
 
 	entry, ok := dict[uint16(firstCode)]
 	if !ok {
-		return nil, errors.New("corrupt initial LZW code")
+		return nil, errors.New("invalid initial code")
 	}
 
 	var output bytes.Buffer
@@ -60,7 +60,7 @@ func Decompress(compressed []byte) ([]byte, error) {
 		} else if code == nextCode {
 			current = prev + string(prev[0])
 		} else {
-			return nil, errors.New("corrupt LZW codeword sequence")
+			return nil, errors.New("invalid codeword sequence")
 		}
 
 		output.WriteString(current)

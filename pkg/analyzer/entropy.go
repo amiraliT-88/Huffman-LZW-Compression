@@ -50,12 +50,11 @@ func AnalyzeData(data []byte) AnalysisResult {
 }
 
 func (r AnalysisResult) FormatReport() string {
-	return fmt.Sprintf("==================== SHANNON ENTROPY ANALYSIS ====================\n" +
-		"Total Size:               %d bytes\n" +
-		"Unique Symbols:           %d / 256\n" +
-		"Shannon Information H(X): %.4f bits/byte (Theoretical Max: 8.0000)\n" +
-		"Max Theoretical Saving:   %.2f%%\n" +
-		"Theoretical Lower Bound:  %d bytes\n" +
-		"==================================================================",
+	return fmt.Sprintf("File Analysis (Shannon Entropy)\n" +
+		"Total Size:              %d bytes\n" +
+		"Unique Symbols:          %d / 256\n" +
+		"Shannon Info H(X):       %.4f bits/byte\n" +
+		"Max Theoretical Saving:  %.2f%%\n" +
+		"Theoretical Lower Bound: %d bytes",
 		r.TotalBytes, r.UniqueSymbols, r.ShannonEntropy, r.MaxTheoreticalRatio, r.OptimalCompressedSize)
 }

@@ -4,17 +4,15 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
+
 	"datacompression/pkg/bitstream"
 )
 
-var (
-	MagicHeader = []byte{'D', 'C', 0x01} // Data-Compression Huffman format
-)
+var MagicHeader = []byte{'D', 'C', 0x01}
 
-// Compress encodes data using Huffman variable-length prefix coding.
 func Compress(input []byte) ([]byte, error) {
 	if len(input) == 0 {
-		return nil, errors.New("cannot compress empty input")
+		return nil, errors.New("empty input")
 	}
 
 	freqs := make(map[byte]int)
@@ -24,31 +22,26 @@ func Compress(input []byte) ([]byte, error) {
 
 	tree := BuildTree(freqs)
 	if tree == nil {
-		return nil, errors.New("failed to construct Huffman tree")
+		return nil, errors.New("failed to build tree")
 	}
 	codeTable := BuildCodeTable(tree)
 
 	var buf bytes.Buffer
 
-	// Write Magic Header
 	if _, err := buf.Write(MagicHeader); err != nil {
 		return nil, err
 	}
 
-	// Write Original Length (uint64, 8 bytes)
 	origLen := uint64(len(input))
 	if err := binary.Write(&buf, binary.BigEndian, origLen); err != nil {
 		return nil, err
 	}
 
 	bw := bitstream.NewBitWriter(&buf)
-
-	// Serialize Tree topology in bitstream
 	if err := SerializeTree(tree, bw); err != nil {
 		return nil, err
 	}
 
-	// Encode payload bits
 	for _, b := range input {
 		code := codeTable[b]
 		for i := 0; i < len(code); i++ {
@@ -59,7 +52,6 @@ func Compress(input []byte) ([]byte, error) {
 		}
 	}
 
-	// Flush remaining bits
 	if _, err := bw.Flush(); err != nil {
 		return nil, err
 	}

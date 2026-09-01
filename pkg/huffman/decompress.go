@@ -4,17 +4,17 @@ import (
 	"bytes"
 	"encoding/binary"
 	"errors"
+
 	"datacompression/pkg/bitstream"
 )
 
-// Decompress decodes a Huffman compressed stream back to original bytes.
 func Decompress(compressed []byte) ([]byte, error) {
 	if len(compressed) < len(MagicHeader)+8 {
-		return nil, errors.New("corrupted or truncated archive header")
+		return nil, errors.New("corrupted or truncated archive")
 	}
 
 	if !bytes.Equal(compressed[:len(MagicHeader)], MagicHeader) {
-		return nil, errors.New("invalid file signature: not a valid Huffman archive")
+		return nil, errors.New("invalid huffman signature")
 	}
 
 	offset := len(MagicHeader)
@@ -38,7 +38,7 @@ func Decompress(compressed []byte) ([]byte, error) {
 	for uint64(len(output)) < origLen {
 		bit, err := br.ReadBit()
 		if err != nil {
-			return nil, errors.New("unexpected EOF during decompression")
+			return nil, errors.New("unexpected eof")
 		}
 
 		if bit == 0 {
@@ -48,7 +48,7 @@ func Decompress(compressed []byte) ([]byte, error) {
 		}
 
 		if curr == nil {
-			return nil, errors.New("corrupt tree traversal: reached null node")
+			return nil, errors.New("corrupt tree traversal")
 		}
 
 		if curr.IsLeaf() {
